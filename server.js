@@ -1,26 +1,29 @@
-const http = require('http');
+/* eslint-disable no-fallthrough */
+
 const Koa = require('koa');
 const koaBody = require('koa-body');
+const TicketController = require('./src/js/TicketController');
+
+const ctrl = new TicketController();
 
 const app = new Koa();
 const PORT = process.env.PORT || 9000;
-app.listen(PORT, () => console.log(`Koa server has been started on port ${PORT} ...`));
 
 app.use(koaBody({
+  text: true,
   urlencoded: true,
+  json: true,
+  multipart: true,
 }));
 
-app.use(koaBody({
-  text: true, urlencoded: true, json: true, multipart: true,
-}));
-
+// eslint-disable-next-line consistent-return
 app.use(async (ctx, next) => {
   const origin = ctx.request.get('Origin');
   if (!origin) {
-    return await next();
+    await next();
   }
 
-  const headers = { 'Access-Control-Allow-Origin': '*' }; // сервер может быть вызван из любого источника
+  const headers = { 'Access-Control-Allow-Origin': '*' };
   if (ctx.request.method !== 'OPTIONS') {
     ctx.response.set({ ...headers });
     try {
@@ -45,19 +48,80 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.use(async ctx => {
-  const { name, phone } = ctx.request.querystring;
+app.use(async (ctx) => {
+  const { method, id } = ctx.request.query;
+  console.log(ctx.request.query);
+  switch (method) {
+    case 'getStartedTickets':
+      try {
+        const result = ctrl.getStartedTickets();
+        ctx.response.body = result;
+        return;
+      } catch (err) {
+        console.error(err);
+      }
+    case 'allTickets':
+      try {
+        const result = ctrl.allTickets();
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    case 'createTicket':
+      try {
+        const object = ctx.request.body;
 
-  ctx.response.set({
-    'Access-Control-Allow-Origin': '*',
-  });
+        const result = ctrl.createTicket(object);
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    case 'getTicketById':
+      try {
+        const result = ctrl.getTicketById(id);
+        ctx.response.body = result;
+        console.log(result, 'result');
+      } catch (err) {
+        console.error(err);
+      }
+      return;
 
-  if (subscriptions.has(phone)) {
-    ctx.response.status = 400;
-    ctx.response.body = 'You already subscribed';
+    case 'deleteTicket':
+      try {
+        const result = ctrl.deleteTicket(id);
+        console.log(result, 'result');
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+
+    case 'toggleStatusTicket':
+      try {
+        const result = ctrl.toggleStatusTicket(id);
+        console.log(result, 'result');
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+
+    case 'editTicket':
+      try {
+        const object = ctx.request.body;
+        const result = ctrl.editTicket(object);
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+
+    default:
+      ctx.response.body = `Method "${method}" is not known.`;
+      ctx.response.status = 404;
   }
-  subscriptions.set(phone, name);
-  ctx.response.body = 'Ok';
 });
 
-const server = http.createServer(app.callback()).listen(PORT);
+app.listen(PORT, () => console.log(`Koa server has been started on port ${PORT} ...`));
