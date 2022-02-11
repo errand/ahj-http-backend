@@ -2,7 +2,7 @@ const TicketController = require('./TicketController');
 const Ui = require('./Ui');
 
 const ui = new Ui();
-ui.bindToDOM(document.querySelector('#app'));
+ui.bindToDOM(document.querySelector('#ticketsContainer'));
 
 const ctr = new TicketController(ui);
 ctr.init();

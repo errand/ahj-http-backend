@@ -9,11 +9,17 @@ class TicketController {
 
   init() {
     this.ui.drawUi();
-    this.ui.addTicketClickListener(this.onNewTickerButtonClick.bind(this));
+    this.ui.addTicketClickListener(this.onAddNewTickerButtonClick.bind(this));
+    this.ui.newTicketClickListener(this.onSubmitTickerButtonClick.bind(this));
   }
 
-  onNewTickerButtonClick() {
+  onAddNewTickerButtonClick() {
     this.ui.openModal('add');
+  }
+
+  onSubmitTickerButtonClick(evt) {
+    evt.preventDefault();
+    console.log(evt);
   }
 
   allTickets() {
