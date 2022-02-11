@@ -1,10 +1,19 @@
-const Ticket = require('./Ticket');
-const TicketFull = require('./TicketFull');
+const { Ticket, TicketFull } = require('./Ticket');
 
 class TicketController {
-  constructor() {
+  constructor(ui) {
+    this.ui = ui;
     this.tickets = [];
     this.descriptions = [];
+  }
+
+  init() {
+    this.ui.drawUi();
+    this.ui.addTicketClickListener(this.onNewTickerButtonClick.bind(this));
+  }
+
+  onNewTickerButtonClick() {
+    this.ui.openModal('add');
   }
 
   allTickets() {
@@ -75,6 +84,4 @@ class TicketController {
   }
 }
 
-module.exports = {
-  TicketController,
-};
+module.exports = TicketController;

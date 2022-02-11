@@ -1,3 +1,5 @@
+const uuid = require('uuid');
+
 class Ticket {
   constructor(id, name, status, created) {
     this.id = id;
@@ -7,6 +9,19 @@ class Ticket {
   }
 }
 
+class TicketFull extends Ticket {
+  constructor(name, description) {
+    super(name);
+
+    this.id = uuid;
+    this.name = name;
+    this.status = false;
+    this.created = new Date().toLocaleString();
+    this.description = description || '';
+  }
+}
+
 module.exports = {
   Ticket,
+  TicketFull,
 };

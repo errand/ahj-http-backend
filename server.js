@@ -7,7 +7,7 @@ const TicketController = require('./src/js/TicketController');
 const ctrl = new TicketController();
 
 const app = new Koa();
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 7070;
 
 app.use(koaBody({
   text: true,

@@ -1,5 +1,9 @@
-import TicketController from './TicketController';
+const TicketController = require('./TicketController');
+const Ui = require('./Ui');
 
-const ctr = new TicketController();
+const ui = new Ui();
+ui.bindToDOM(document.querySelector('#app'));
 
+const ctr = new TicketController(ui);
+ctr.init();
 console.log(ctr.getStartedTickets());
