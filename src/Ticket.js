@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 class Ticket {
   constructor(id, name, status, created) {
@@ -13,7 +13,7 @@ class TicketFull extends Ticket {
   constructor(name, description) {
     super(name);
 
-    this.id = uuid;
+    this.id = uuidv4();
     this.name = name;
     this.status = false;
     this.created = new Date().toLocaleString();

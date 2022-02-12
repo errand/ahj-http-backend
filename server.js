@@ -52,9 +52,9 @@ app.use(async (ctx) => {
   const { method, id } = ctx.request.query;
   console.log(ctx.request.query);
   switch (method) {
-    case 'getStartedTickets':
+    case 'createRandomTickets':
       try {
-        const result = ctrl.getStartedTickets();
+        const result = ctrl.createRandomTickets();
         ctx.response.body = result;
         return;
       } catch (err) {

@@ -13,10 +13,13 @@ class TicketController {
     return this.shortTickets;
   }
 
-  getStartedTickets() {
-    const ticket1 = new TicketFull('name', 'description');
-
-    this.tickets.push(ticket1);
+  createRandomTickets() {
+    let ticket;
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < 10; i++) {
+      ticket = new TicketFull('name', 'description');
+      this.tickets.push(ticket);
+    }
     return this.tickets;
   }
 
