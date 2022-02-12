@@ -18,8 +18,9 @@ class TicketController {
   }
 
   onSubmitTickerButtonClick(evt) {
-    evt.preventDefault();
-    console.log(evt);
+    const modal = evt.target.closest('.modal');
+    const formType = modal.dataset.id;
+    console.log(formType);
   }
 
   allTickets() {

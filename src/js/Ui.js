@@ -42,12 +42,12 @@ class Ui {
     }
 
     let formControls = `<div class="form-group">
-            <label for="shortDescription">Краткое описание</label>
-            <input type="text" id="shortDescription" name="shortDescription" data-id="modal-short-description" required>
+            <label class="form-label" for="shortDescription">Краткое описание</label>
+            <input type="text" class="form-control" id="shortDescription" name="shortDescription" data-id="modal-short-description" required>
           </div>
           <div class="form-group">
-            <label for="description">Подробное описание</label>
-            <textarea name="description" id="description" data-id="modal-description" required></textarea>
+            <label class="form-label" for="description">Подробное описание</label>
+            <textarea name="description" class="form-control" id="description" data-id="modal-description" required></textarea>
           </div>`;
     if (modalName === 'delete') {
       formControls = `<div class="form-group">
@@ -58,22 +58,50 @@ class Ui {
     modal.innerHTML = `<div class="modal-inner">
       <div class="modal-content">
         <header><h3 class="title">${modalTitle}</h3></header>
-        <form>
+        <form class="modal-form">
           ${formControls}
           <div class="form-group">          
             <button data-id="modal-cancel">Отмена</button>
-            <button data-id="modal-submit">ОК</button>
+            <button type="button" data-id="modal-submit">ОК</button>
           </div>
         </form>
       </div>
     </div>`;
 
     if (modalName === 'add') {
-      modal.querySelector('[data-id="modal-submit"]').addEventListener('click', evt => this.onNewTicketClick(evt));
+      modal.querySelector('[data-id="modal-submit"]').addEventListener('click', evt => {
+        if (this.validateForm(evt)) {
+          this.onNewTicketClick(evt);
+        }
+      });
     }
     modal.querySelector('[data-id="modal-cancel"]').addEventListener('click', () => this.closeModal());
+    modal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        this.closeModal();
+      }
+    });
 
     document.body.appendChild(modal);
+  }
+
+  validateForm(evt) {
+    const form = evt.target.closest('.modal-form');
+    const inputs = form.querySelectorAll('.form-control');
+    let counter = 0;
+    [...inputs].forEach(input => {
+      input.closest('.form-control').classList.remove('invalid');
+      if (input.value === '') {
+        input.closest('.form-control').classList.add('invalid');
+      } else {
+        counter += 1;
+      }
+    });
+
+    if (counter > 0) {
+      return true;
+    }
+    return false;
   }
 
   /**

@@ -1,3 +1,7 @@
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
 .container {
   max-width: 960px;
   margin-left: auto;

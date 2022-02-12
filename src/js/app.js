@@ -6,4 +6,3 @@ ui.bindToDOM(document.querySelector('#ticketsContainer'));
 
 const ctr = new TicketController(ui);
 ctr.init();
-console.log(ctr.getStartedTickets());
