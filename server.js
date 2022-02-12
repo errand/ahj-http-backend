@@ -20,7 +20,7 @@ app.use(koaBody({
 app.use(async (ctx, next) => {
   const origin = ctx.request.get('Origin');
   if (!origin) {
-    await next();
+    return await next();
   }
 
   const headers = { 'Access-Control-Allow-Origin': '*' };
