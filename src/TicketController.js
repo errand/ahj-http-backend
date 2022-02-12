@@ -1,26 +1,9 @@
 const { Ticket, TicketFull } = require('./Ticket');
 
 class TicketController {
-  constructor(ui) {
-    this.ui = ui;
+  constructor() {
     this.tickets = [];
     this.descriptions = [];
-  }
-
-  init() {
-    this.ui.drawUi();
-    this.ui.addTicketClickListener(this.onAddNewTickerButtonClick.bind(this));
-    this.ui.newTicketClickListener(this.onSubmitTickerButtonClick.bind(this));
-  }
-
-  onAddNewTickerButtonClick() {
-    this.ui.openModal('add');
-  }
-
-  onSubmitTickerButtonClick(evt) {
-    const modal = evt.target.closest('.modal');
-    const formType = modal.dataset.id;
-    console.log(formType);
   }
 
   allTickets() {

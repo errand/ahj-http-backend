@@ -2,7 +2,7 @@
 
 const Koa = require('koa');
 const koaBody = require('koa-body');
-const TicketController = require('./src/js/TicketController');
+const TicketController = require('./src/TicketController');
 
 const ctrl = new TicketController();
 
