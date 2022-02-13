@@ -98,9 +98,9 @@ app.use(async (ctx) => {
       }
       return;
 
-    case 'toggleStatusTicket':
+    case 'toggleTicketStatus':
       try {
-        const result = ctrl.toggleStatusTicket(id);
+        const result = ctrl.toggleTicketStatus(id);
         console.log(result, 'result');
         ctx.response.body = result;
       } catch (err) {
