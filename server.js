@@ -50,7 +50,7 @@ app.use(async (ctx, next) => {
 
 app.use(async (ctx) => {
   const { method, id } = ctx.request.query;
-  console.log(ctx.request.query);
+  // console.log(ctx.request.query);
   switch (method) {
     case 'createRandomTickets':
       try {

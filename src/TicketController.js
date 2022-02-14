@@ -60,6 +60,7 @@ class TicketController {
   editTicket(object) {
     const data = JSON.parse(object);
 
+    console.log(data);
     const index = this.getIndexId(data.id);
 
     const item = this.tickets[index];
